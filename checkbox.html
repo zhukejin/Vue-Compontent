@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src='vue.min.js'></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/checkbox.css">
+    <link rel="stylesheet" href="style/button.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+
+        fieldset {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<fieldset id='checkboxDemo'>
+    <legend>普通CheckBox</legend>
+    <checkbox :value.sync='check' :disabled='disabled' name='zhukejin'>朱轲瑾-{{check}}</checkbox>
+    <br><br>
+    <v-button @click='check = !check' type='white'>{{check ? '取消选中' : '选中'}}</v-button>
+    <v-button @click='disabled=!disabled' type='white'>{{disabled ? '取消禁用' : '禁用'}}</v-button>
+    <br>
+</fieldset>
+
+<script type="x/template" id="checkbox">
+    <label class='ant-checkbox-wrapper'>
+        <span class="ant-checkbox" :class="{'ant-checkbox-checked-1 ant-checkbox-checked': value, 'ant-checkbox-disabled': disabled}">
+            <span class="ant-checkbox-inner"></span>
+            <input :disabled='disabled' type="checkbox" class="ant-checkbox-input" :name="name" v-model="value">
+        </span>
+        <span><slot></slot></span>
+    </label>
+</script>
+
+<br>
+<!-- 具名多选框 -->
+<fieldset id='checkboxGroupDemo'>
+    <legend>具名多选框组（可以使用所有按钮形态）</legend>
+    <checkbox-group :value='value' :options="options" name="group"></checkbox-group>
+    <br><br>
+    {{value | json}}
+
+    <br><br>
+
+    <!-- 使用按钮的多选框 -->
+    <fieldset id='checkboxGroupButtonDemo'>
+        <legend>具名多选按钮组</legend>
+        <checkbox-group :value='value' :use-button='useButton' :options="options" name="group"></checkbox-group>
+    </fieldset>
+
+    <!-- 使用按钮的多选框 -->
+    <fieldset id='checkboxGroupButtonDemo'>
+        <legend>具名多选按钮组（红色）</legend>
+        <checkbox-group :value='value' :use-button="{startType: 'white', endType : 'red', width: 125}" :options="options" name="group"></checkbox-group>
+    </fieldset>
+
+    <!-- 使用按钮的多选框 -->
+    <fieldset id='checkboxGroupButtonDemo'>
+        <legend>具名多选按钮组（橘色）</legend>
+        <checkbox-group :value='value' :use-button="{startType: 'white', endType : 'orange', width: 150}" :options="options" name="group"></checkbox-group>
+    </fieldset>
+
+</fieldset>
+
+
+<script type="text/javascript" src="Js/button.js"></script>
+<script type="x/template" id="checkboxGroup">
+<template v-if="useButton">
+    <template v-for="item in options">
+        <label class='ant-checkbox-wrapper'>
+            <input :disabled='item.disabled' type="checkbox" class="zq-hidden" :value="item.value" :name="name" v-model="value">
+            <v-button :width="useButton.width" :disabled="item.disabled" :type="!item.disabled && value.indexOf(item.value) < 0 ? useButton.startType : !item.disabled && value.indexOf(item.value) > -1 ? useButton.endType : ''" @click="check(item.value)">{{item.label}}</v-button>
+        </label>
+    </template>
+</template>
+
+<template v-else>
+    <template v-for="item in options">
+        <label class='ant-checkbox-wrapper'>
+            <span class="ant-checkbox" :class="{'ant-checkbox-checked-1 ant-checkbox-checked': value.indexOf(item.value) > -1, 'ant-checkbox-disabled': item.disabled}">
+                <span class="ant-checkbox-inner"></span>
+                <input :disabled='item.disabled' type="checkbox" class="ant-checkbox-input" :value="item.value" :name="name" v-model="value">
+            </span>
+            <span>{{item.label}}</span>
+        </label>
+    </template>
+</template>
+</script>
+
+<script type="text/javascript">
+    Vue.component('checkbox', {
+        template: '#checkbox',
+        props: {
+            value: {
+              type: Boolean,
+              required: true,
+              twoWay: true    
+            },
+            name: String,
+            disabled: [],
+            change: Function
+        }
+    });
+
+    var check = new Vue({
+        el: '#checkboxDemo',
+        data: {
+            check: true,
+            disabled: false,
+            checkedNames: []
+        },
+        methods: {
+            change: function (val) {
+                console.log('new Val: ' + val)
+            }
+        }
+    });
+
+
+//  checkboxGroup Demo  具名多选框
+    Vue.component('checkboxGroup', {
+        template: '#checkboxGroup',
+        props: {
+            value: Array,
+            name: String,
+            disabled: [],
+            options: Array,
+            useButton: Object
+        },
+        methods: {
+            check: function (v) {
+                this.value.indexOf(v) > -1 ? this.value.$remove(v) : this.value.push(v);
+            }
+        }
+        
+    });
+
+    var checkboxGroup = new Vue({
+        el: '#checkboxGroupDemo',
+        data: {
+            options: [
+                {label: '朱轲瑾', value: 'zhukejin', disabled: true},
+                {label: '赵素云', value: 'zhaosuyun'},
+                {label: '赵彦超', value: 'zhaoyanchao'},
+                {label: '咸元昭', value: 'xianyuanzhao'},
+            ],
+            value : ['zhaosuyun', 'zhukejin'],
+            useButton: {
+                startType: 'white',
+                endType : 'blue'
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

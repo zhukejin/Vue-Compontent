@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src='vue.min.js'></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/calendar.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+            font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        fieldset {
+            margin-top: 10px;
+        }
+
+        .text-input {
+            width: 300px;
+            height: 30px;
+            padding: 5px;
+            /*border-radius: 5px;*/
+        }
+    </style>
+</head>
+<body>
+<fieldset id='calendarDemo'>
+    <legend>时间筛选框</legend>
+    <input type="text" class="text-input" @click="showCalendar1" v-model="value1" placeholder="单选">
+    <calendar :show.sync="show1" :value.sync="value1" :x="x1" :y="y1"></calendar>
+
+    <input type="text" class="text-input" @click="showCalendar" v-model="value" placeholder="多选">
+    <calendar :show.sync="show" :value.sync="value" :x="x" :y="y" :begin="begin" :end="end" :range="range"></calendar>
+</fieldset>
+
+<script type="text/javascript" src="Js/calendar.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el : '#calendarDemo',
+        data:  {
+            show:false,
+            type:"date", //date datetime
+            value:"",
+            // begin:"2015-12-20",
+            // end:"2015-12-25",
+            x:0,
+            y:0,
+            range:true,//是否多选
+            
+            show1:false,
+            value1:"",
+            x1:0,
+            y1:0,
+            // range:true,//是否多选
+        },
+        methods:{
+            showCalendar:function(e){
+                e.stopPropagation();
+                var that=this;
+                that.show=true;
+                that.x=e.target.offsetLeft;
+                that.y=e.target.offsetTop+e.target.offsetHeight+8;
+                var bindHide=function(e){
+                    e.stopPropagation();
+                    that.show=false;
+                    document.removeEventListener('click',bindHide,false);
+                };
+                setTimeout(function(){
+                    document.addEventListener('click',bindHide,false);
+                },500);
+            },
+            showCalendar1:function(e){
+                e.stopPropagation();
+                var that=this;
+                that.show1=true;
+                that.x1=e.target.offsetLeft;
+                that.y1=e.target.offsetTop+e.target.offsetHeight+8;
+                var bindHide=function(e){
+                    e.stopPropagation();
+                    that.show1=false;
+                    document.removeEventListener('click',bindHide,false);
+                };
+                setTimeout(function(){
+                    document.addEventListener('click',bindHide,false);
+                },500);
+            }
+        }
+    })
+</script>
+</body>
+</html>

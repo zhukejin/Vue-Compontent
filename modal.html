@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src='vue.min.js'></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/modal.css">
+    <link rel="stylesheet" href="style/button.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+
+        fieldset {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id='modal'>
+    <v-button type='blue' @click="this.show=true">弹出成功按钮</v-button>
+    <modal :show.sync="show" width="500" dismiss=true title="这里是成功" :on-ok="close">
+        这里是内容
+    </modal>
+    
+    <v-button type='red' @click="this.show1=true">弹出失败按钮</v-button>
+    <modal :show.sync="show1" width="500" type="failed" :dismiss=true title="这里是失败" :on-ok="close1">
+        这里是内容
+    </modal>
+    
+</div>
+
+<script type="text/javascript" src="Js/button.js"></script>
+
+<script type="text/javascript">
+    //模态框组件
+    Vue.component('modal', {
+        template: '<div class="modal-layer v-modal" :style="{top: top + \'px\'}" id="marketing-layer" transition="modal" v-show="show" @click.self="hideBind">'+
+        '<div class="modal-layer-part" :style="{width: width + \'px\'}">'+
+        '<div class="modal-layer-part-title modal-layer-success other-layer-title" :class="{\'modal-layer-success\': type ==\'success\', \'modal-layer-failed\' :type ==\'failed\'}">'+
+        '<span class="modal-layer-part-title-left">{{title}}</span>'+
+        '<span class="modal-layer-part-title-right" @click="show=false">'+
+        '×'+
+        '</span>'+
+        '</div>'+
+        '<div class="modal-layer-content"><slot></slot></div>' +
+        '<div class="clearfix modal-layer-footer">'+
+        '<div class="footer-btn"><v-button :type="type == \'failed\' ? \'red\' : \'blue\'" width=76 height=26 @click="onOk()">{{btnText || "确定"}}</v-button></div>' +
+        '</div>' +
+        '</div>'+
+        ' </div>',
+        props: {
+            show:Boolean,
+            title:String,
+            type:String,
+            onOk: Function,
+            width: [Number, String],
+            top: [Number, String],
+            btnText: String,
+            dismiss: Boolean
+
+        },
+        methods: {
+            hideBind : function () {
+                if (!this.dismiss) return;
+                this.show = false
+            }
+        }
+    });
+
+    var modal = new Vue({
+        el: '#modal',
+        data: {
+            show: false,
+            show1: false,
+        },
+        methods: {
+            close: function (val) {
+                this.show = false
+            },
+             close1: function (val) {
+                this.show1 = false
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

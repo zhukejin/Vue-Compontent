@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src='vue.min.js'></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/radio.css">
+    <link rel="stylesheet" href="style/button.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+        }
+
+        fieldset {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id='radioDemo'>
+    <fieldset>
+        <legend>普通Radio</legend>
+        
+        <radio name="radio" :value.sync="value" :options="options"></radio>
+        
+
+        <div style="margin-top: 10px;">
+            当前选中：{{value}}
+        </div>  
+    </fieldset>
+
+    <fieldset>
+        <legend>使用Button</legend> 
+        <radio name="radio" :use-button='useButton' :value.sync="value" :options="options"></radio> 
+    </fieldset>
+
+    <fieldset>
+        <legend>使用Button（红色 + 自定义宽度）</legend> 
+        <radio name="radio" :use-button="{startType: 'white', endType : 'red', width: 125}" :value.sync="value" :options="options"></radio> 
+
+    <br>
+    <br>
+        useButton 中的 width 为全局button 宽度。默认为 v-button 的宽度
+        也可以在 option 中每个对象中定义各自button 的宽度
+    </fieldset>
+</div>
+
+<script type="text/javascript" src="Js/button.js"></script>
+<script type="x/template" id="radio">
+<div class="zq-radio-group" v-if="useButton">
+    <label v-for="item in options" class="zq-radio" :class="{'zq-radio-checked' : item.value === value}">
+        <span class="zq-radio">
+            <input type="radio" :disabled="item.disabled" class="zq-radio-input" :value="item.value" :name="name" v-model="value">
+        </span>
+        <v-button :width="item.width || useButton.width" :type="!item.disabled && value != item.value ? useButton.startType : !item.disabled && value == item.value ? useButton.endType : ''" :disabled="item.disabled" @click="value=item.value">{{item.label}}</v-button>
+    </label>
+</div>
+
+<div class="zq-radio-group" v-else>
+    <label v-for="item in options" class="zq-radio" :class="{'zq-radio-checked' : item.value === value, 'zq-radio-disabled' : item.disabled}">
+        <span class="zq-radio" :class="{'zq-radio-checked' : item.value === value, 'zq-radio-disabled' : item.disabled}">
+            <span class="zq-radio-inner"></span>
+            <input type="radio" :disabled="item.disabled" class="zq-radio-input" :value="item.value" :name="name" v-model="value">
+        </span>
+        <span>{{item.label}}</span>
+    </label>
+</div>
+</script>
+
+<script type="text/javascript">
+    Vue.component('radio', {
+        template: '#radio',
+        props: {
+            value: {
+              required: true,
+              twoWay: true    
+            },
+            name: String,
+            options: Array,
+            useButton: Object
+        }
+    });
+
+    var radio = new Vue({
+        el: '#radioDemo',
+        data: {
+            options: [
+                {label: '使用A方案', value: 'A', width: 200},
+                {label: '使用B方案', value: 'B'},
+                {label: '使用C方案', value: 'C', disabled : true}
+            ],
+            value : 'A',
+            useButton: {
+                startType: 'white',
+                endType : 'blue',
+                width : 150
+            }
+        },
+        methods: {
+            change: function (val) {
+                console.log('new Val: ' + val)
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

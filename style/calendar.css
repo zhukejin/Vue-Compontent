@@ -1,0 +1,165 @@
+.calendar {
+    width: 300px;
+    padding: 10px;
+    background: #fff;
+    position: absolute;
+    border: 1px solid #DEDEDE;
+    border-radius: 2px;
+    opacity:.95;
+    transition: all .3s ease;
+}
+
+.calendar-enter, .calendar-leave {
+    opacity: 0;
+    transform: translate3d(0,-10px, 0);
+}
+.calendar:before {
+    position: absolute;
+    left:30px;
+    top: -10px;
+    content: "";
+    border:5px solid rgba(0, 0, 0, 0);
+    border-bottom-color: #DEDEDE;
+}
+.calendar:after {
+    position: absolute;
+    left:30px;
+    top: -9px;
+    content: "";
+    border:5px solid rgba(0, 0, 0, 0);
+    border-bottom-color: #fff;
+}
+.calendar-tools{
+    height:32px;
+    font-size: 20px;
+    line-height: 32px;
+    color:#2db7f5;
+}
+.calendar-tools .float.left{
+    float:left;
+}
+.calendar-tools .float.right{
+    float:right;
+}
+.calendar-tools input{
+    font-size: 20px;
+    line-height: 32px;
+    color: #2db7f5;
+    width: 70px;
+    text-align: center;
+    border:none;
+    background-color: transparent;
+}
+.calendar-tools>i{
+    margin:0 16px;
+    line-height: 32px;
+    cursor: pointer;
+    color:#707070;
+}
+.calendar-tools>i:hover{
+    color:#2db7f5;
+}
+
+.calendar .left {
+    float: left;
+}
+
+.calendar .center {
+    display: inline-block;
+    clear: left;
+    width: 65%;
+    text-align: center;
+}
+.calendar .right {
+    float: right;
+}
+.calendar table {
+    clear: both;
+    width: 100%;
+    margin-bottom:10px;
+    border-collapse: collapse;
+    color: #444444;
+}
+.calendar td {
+    margin:2px !important;
+    padding:8px 0;
+    width: 14.28571429%;
+    text-align: center;
+    vertical-align: middle;
+    font-size:16px;
+    line-height: 125%;
+    cursor: pointer;
+}
+.calendar td:hover{
+    background:#f3f8fa;
+}
+.calendar td.week{
+    pointer-events:none !important;
+    cursor: default !important;    
+}
+.calendar td.disabled {
+    color: #c0c0c0;
+    pointer-events:none !important;
+    cursor: default !important;
+}
+.calendar td.today {
+    background-color: #2db7f5;
+    color: #fff;
+    font-size:16px;
+}
+
+.calendar td.today:first {
+    border-radius: 5px 10px;
+}
+
+.calendar thead td {
+  text-transform: uppercase;
+}
+.calendar .timer{
+    margin:10px 0;
+    text-align: center;
+}
+.calendar .timer input{
+    border-radius: 2px;
+    padding:5px;
+    font-size: 14px;
+    line-height: 18px;
+    color: #2db7f5;
+    width: 50px;
+    text-align: center;
+    border:1px solid #efefef;
+}
+.calendar .timer input:focus{
+    border:1px solid #2db7f5;
+}
+.calendar-button{
+    text-align: center;
+}
+.calendar-button button{
+    border:none;
+    cursor: pointer;
+    display: inline-block;
+    min-height: 1em;
+    min-width: 8em;
+    vertical-align: baseline;
+    background:#2db7f5;
+    color:#fff;
+    margin: 0 .25em 0 0;
+    padding: .8em 2.5em;
+    font-size: 1em;
+    line-height: 1em;
+    text-align: center;
+    border-radius: .3em;
+}
+.calendar-button button.cancel{
+    background:#efefef;
+    color:#666;
+}
+.calendar .lunar{
+     font-size:11px;
+     line-height: 150%;
+     color:#aaa;   
+}
+.calendar td.today .lunar{
+     color:#fff;   
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>button</title>
+    <script type="text/javascript" src='vue.min.js'></script>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/button.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+            transition: background 1s cubic-bezier(.075,.82,.165,1);
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body>
+<fieldset id='buttonDemo'>
+    <legend>Button</legend>
+    <v-button @click="click('普通')">普通按钮</v-button>
+    <v-button width=200>自定义宽度</v-button>
+    <v-button disabled>禁用按钮</v-button>
+    <v-button type='white'>白色按钮</v-button>
+    <v-button type='ghost'>幽灵按钮</v-button>
+    <v-button type='blue'>蓝色按钮</v-button>
+    <v-button type='red'>红色按钮</v-button>
+    <v-button type='orange'>橘色按钮</v-button>
+</fieldset>
+
+<script type="text/javascript" src="Js/button.js"></script>
+<script type="text/javascript">
+    var check = new Vue({
+        el: '#buttonDemo',
+        methods: {
+            click: function (type) {
+                console.log(type);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
