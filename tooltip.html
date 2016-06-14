@@ -23,10 +23,18 @@
     <legend>ToolTip</legend>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <tooltip title="这里是一个强大的提示">
         <v-button type='blue' @click="hehe()">移入激活提示</v-button>
     </tooltip>
-    <tooltip title="真实的Button">
+    <tooltip title="很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示">
         <v-button @click="hehe" disabled :material="material">{{material == 'button' ? '真实': '模拟'}}的Btn</v-button>
     </tooltip>
 
@@ -73,8 +81,9 @@
                 var slot = this.$els.slot,
                     tooltip = this.$els.tooltip;
 
+                console.log(slot.offsetTop, slot.offsetHeight)
                 this.left = slot.offsetLeft + parseInt((slot.offsetWidth - tooltip.offsetWidth) / 2) + 'px';
-                this.top = slot.offsetTop - slot.offsetHeight - 20 + 'px';
+                this.top = slot.offsetTop - slot.offsetHeight - tooltip.offsetHeight + 25 + 'px';
             }
         }
     });
