@@ -15,3 +15,4 @@ Demo地址: [http://demo.zhukejin.com/21-Vue-Compontent](http://demo.zhukejin.co
 - [Radio](http://demo.zhukejin.com/21-Vue-Compontent/radio.html)
 - [Calendar](http://demo.zhukejin.com/21-Vue-Compontent/calendar.html)
 - [Modal](http://demo.zhukejin.com/21-Vue-Compontent/modal.html)
+- [Tooltip](http://demo.zhukejin.com/21-Vue-Compontent/tooltip.html)

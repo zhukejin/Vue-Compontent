@@ -30,6 +30,11 @@
     <v-button type='orange'>橘色按钮</v-button>
 </fieldset>
 
+<fieldset id="spanBtn" style="margin-top: 10px;">
+    <legend>模拟的Button</legend>
+    <v-button type='white' :material="material">白色按钮</v-button>
+</fieldset>
+
 <script type="text/javascript" src="Js/button.js"></script>
 <script type="text/javascript">
     var check = new Vue({
@@ -37,6 +42,19 @@
         methods: {
             click: function (type) {
                 console.log(type);
+            }
+        }
+    });
+
+    var check1 = new Vue({
+        el: '#spanBtn',
+        data: {
+            material: 'span'
+        },
+        methods: {
+            click: function (type) {
+                console.log(type);
+                check.$off("click")
             }
         }
     });

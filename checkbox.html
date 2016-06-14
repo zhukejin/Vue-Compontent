@@ -103,7 +103,14 @@
             },
             name: String,
             disabled: [],
-            change: Function
+        },
+        watch: {
+            'value': function (v) {
+                this.$dispatch('onchange', {
+                    value: v,
+                    name: this.name
+                })
+            }
         }
     });
 
@@ -114,9 +121,9 @@
             disabled: false,
             checkedNames: []
         },
-        methods: {
-            change: function (val) {
-                console.log('new Val: ' + val)
+        events: {
+            'onchange': function (v) {
+                console.log(v)
             }
         }
     });
