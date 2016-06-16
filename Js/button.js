@@ -35,6 +35,13 @@ Vue.component('vButton', {
         }
     },
     beforeCompile: function () {
+        function assign (obj1, obj2) {
+            for(var key in obj2){
+                obj1[key]=obj2[key]
+            }
+            return obj1;
+        }
+
         var style = {
             width: this.width + 'px',
             height: this.height + 'px',
@@ -46,7 +53,6 @@ Vue.component('vButton', {
             style.lineHeight = this.height ? (this.height - 10 + 'px') : '24px'
         }
 
-        this.styleBtn = $$.assign(style, this.styleBtn);
-
+        this.styleBtn = assign(style, this.styleBtn);
     }
 });
