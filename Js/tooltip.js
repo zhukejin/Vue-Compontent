@@ -1,5 +1,5 @@
 Vue.component('tooltip', {
-        template: '<span v-el:slot style="display: inline-block;" @mouseover="tigger" @mouseout="tigger"><slot></slot></span>' +
+        template: '<span v-el:slot style="display: inline-block;" @mouseenter="tigger" @mouseleave="tigger"><slot></slot></span>' +
                     '<div v-el:tooltip class="zq-tooltip zq-tooltip-placement-top" transition="zoom" v-show="show" :style="{left: left, top: top, transformOrigin: \'50% 51px 0px\'}">' +
                         '<div class="zq-tooltip-content">' +
                         '<div class="zq-tooltip-arrow"></div>' +
