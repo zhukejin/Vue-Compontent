@@ -18,20 +18,32 @@
     </style>
 </head>
 <body>
-<fieldset id='checkboxDemo'>
-    <legend>普通CheckBox</legend>
-    <checkbox :value.sync='check' :disabled='disabled' name='zhukejin'>朱轲瑾-{{check}}</checkbox>
-    <br><br>
-    <v-button @click='check = !check' type='white'>{{check ? '取消选中' : '选中'}}</v-button>
-    <v-button @click='disabled=!disabled' type='white'>{{disabled ? '取消禁用' : '禁用'}}</v-button>
-    <br>
-</fieldset>
+<div id="checkboxDemo">
+    <fieldset>
+        <legend>普通CheckBox</legend>
+        <checkbox :value.sync='check' :disabled='disabled' name='zhukejin'>朱轲瑾-{{check}}</checkbox>
+        <br><br>
+        <v-button @click='check = !check' type='white'>{{check ? '取消选中' : '选中'}}</v-button>
+        <v-button @click='disabled=!disabled' type='white'>{{disabled ? '取消禁用' : '禁用'}}</v-button>
+        <br>
+    </fieldset>
+
+    <fieldset>
+        <legend>使用自定义值的CheckBox</legend>
+        <checkbox :value.sync='checkCustom' is-value='true' true-value='选中了' false-value='未选中' :disabled='disabled' name='zhukejin'>选中这个</checkbox>
+        <br><br>
+        {{checkCustom}}
+        <br>
+    </fieldset>
+</div>
+
 
 <script type="x/template" id="checkbox">
     <label class='ant-checkbox-wrapper'>
-        <span class="ant-checkbox" :class="{'ant-checkbox-checked-1 ant-checkbox-checked': value, 'ant-checkbox-disabled': disabled}">
+        <span class="ant-checkbox" :class="{'ant-checkbox-checked-1 ant-checkbox-checked': isValue ? value === trueValue : value, 'ant-checkbox-disabled': disabled}">
             <span class="ant-checkbox-inner"></span>
-            <input :disabled='disabled' type="checkbox" class="ant-checkbox-input" :name="name" v-model="value">
+            <input v-if='isValue' :disabled='disabled' type='checkbox' class="ant-checkbox-input" :name="name" v-model="value" :true-value="trueValue" :false-value="falseValue">
+            <input v-else :disabled='disabled' type="checkbox" class="ant-checkbox-input" :name="name" v-model="value">
         </span>
         <span><slot></slot></span>
     </label>
@@ -97,10 +109,12 @@
         template: '#checkbox',
         props: {
             value: {
-              type: Boolean,
               required: true,
               twoWay: true    
             },
+            isValue: [],
+            trueValue: [],
+            falseValue: [],
             name: String,
             disabled: [],
         },
@@ -119,7 +133,8 @@
         data: {
             check: true,
             disabled: false,
-            checkedNames: []
+            checkedNames: [],
+            checkCustom: false
         },
         events: {
             'onchange': function (v) {
