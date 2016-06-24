@@ -27,20 +27,26 @@
     <br>
     <br>
     <br>
-    <tooltip title="这里是一个强大的提示">
-        <v-button type='blue' @click="hehe()">移入激活提示</v-button>
-    </tooltip>
-    <tooltip title="很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示">
-        <v-button @click="hehe" disabled :material="material">{{material == 'button' ? '真实': '模拟'}}的Btn</v-button>
-    </tooltip>
+    <div style="position: relative">
+        <tooltip title="这里是一个强大的提示">
+            <v-button type='blue' @click="hehe()">移入激活提示</v-button>
+        </tooltip>
+        <tooltip title="很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示很长的提示">
+            <v-button @click="hehe" disabled :material="material">
+                <span>{{material == 'button' ? '真实': '模拟'}}</span><span>的Btn</span>
+            </v-button>
+        </tooltip>
 
-    <v-button type='white' @click="material = material == 'button' ? 'span' : 'button'">点击切换按钮真实与否</v-button>
+        <v-button type='white' @click="material = material == 'button' ? 'span' : 'button'">点击切换按钮真实与否</v-button>
+    </div>
+
 
     {{material}}
 
 </fieldset>
 
 <script type="text/javascript" src="Js/button.js"></script>
+<script type="text/javascript" src="Js/tooltip.js"></script>
 <script type="text/javascript">
     var check = new Vue({
         el: '#tooltipDemo',

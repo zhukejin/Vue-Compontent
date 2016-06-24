@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-restriction="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>文本框</title>
+    <script type="text/javascript" src="vue.min.js"></script>
+
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/input.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+            transition: background 1s cubic-bezier(.075,.82,.165,1);
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body>
+<h2>文本框限制</h2>
+
+<fieldset style="margin-top: 10px;">
+    <legend>限制数字</legend>
+    <input type="text" class='text-input' v-restriction:number  style="width:200px"  v-model="number">
+</fieldset>
+
+<fieldset style="margin-top: 10px;">
+    <legend>限制浮点</legend>
+    <input type="text" class='text-input' v-restriction:float="2" maxlength="10" style="width:200px"  v-model="float">
+</fieldset>
+
+<script src="component/directives.js"></script>
+<script>
+    new Directives('input');
+    var app = new Vue({
+        el: 'body',
+    });
+
+</script>
+</body>
+</html>

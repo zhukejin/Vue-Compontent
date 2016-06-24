@@ -1,0 +1,18 @@
+.text-input {
+  height:34px;
+  border:1px solid #dedede;
+  border-radius:3px;
+  line-height:32px;
+  padding:0 5px;
+  font-size:12px;
+  transition: border .2s cubic-bezier(.645,.045,.355,1),background .2s cubic-bezier(.645,.045,.355,1),box-shadow .2s cubic-bezier(.645,.045,.355,1);
+}
+
+.text-input:hover {
+    border-color: #57c5f7;
+  }
+.text-input:focus {
+    @extend .text-input:hover;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(45,183,245,.2);
+  }

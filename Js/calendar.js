@@ -7,7 +7,7 @@ Vue.component('calendar', {
     '<i class="left" @click="prev"  @touchstart="prev"> < </i>' +
     '<div class="text center"> ' +
     '<input type="number" v-model="year" value="{{year}}" @change="render(year,month)" @input="render(year,month)" min="1970" max="2100" maxlength="4" number> ' +
-    '/ <input type="number" v-model="month" value="{{month + 1}}" @input="render(year,month)" @change="render(year,month)" min="1" max="12" maxlength="2" number> </div>' +
+    '/  {{month + 1}} </div>' +
     '<i class="right" @click="next"  @touchstart="next"> > </i> </div> ' +
     '<table cellpadding="5"> <thead> ' +
     '<tr> ' +
@@ -117,6 +117,7 @@ Vue.component('calendar', {
                 }
             }
         }else{
+            that.sep = '-';
             that.year = now.getFullYear();
             that.month =now.getMonth();
             that.day = now.getDate();
@@ -128,29 +129,24 @@ Vue.component('calendar', {
                 that.rangeEnd=Array;
             }
         }
-        that.render(that.year,that.month + 1);
+        that.render(that.year,that.month);
     },
     watch:{
         year:function(val,old){
-            //console.log("new %s old %s time:%s",val,old,+new Date);
+            console.log("new %s old %s time:%s",val,old,+new Date);
         }
     },
     methods:{
         zero:function(n){
             return n<10?'0'+n:n;
         },
-        render:function(y,m, a){
-            //if (a) {
-                m --;
-            //}
+        render:function(y,m, event){
             var that=this;
             var firstDayOfMonth = new Date(y, m, 1).getDay();//当月第一天
             var lastDateOfMonth = new Date(y, m + 1, 0).getDate();//当月最后一天
             var lastDayOfLastMonth = new Date(y, m, 0).getDate();//最后一月的最后一天
             that.year=y;
-            console.log(m)
             that.currentMonth=that.months[m];
-
             var seletSplit=that.value.split(" ")[0].split(that.sep);
             var i,line=0,temp=[];
             for(i=1;i <= lastDateOfMonth;i++) {
@@ -286,7 +282,7 @@ Vue.component('calendar', {
                 that.day=that.days[k1][k2].day;
                 that.today=[k1,k2];
                 if(that.type=='date'){
-                    that.value=that.year+that.sep+that.zero(that.month)+that.sep+that.zero(that.days[k1][k2].day);
+                    that.value=that.year+that.sep+that.zero(that.month+1)+that.sep+that.zero(that.days[k1][k2].day);
                     that.show=false;
                 }
             }
@@ -310,10 +306,10 @@ Vue.component('calendar', {
                 return that.zero(args[3])+":"+that.zero(args[4])+":"+that.zero(args[5])
             }
             if(that.type=='datetime'){
-                return args[0]+that.sep+that.zero(args[1])+that.sep+that.zero(args[2])+" "+that.zero(args[3])+":"+that.zero(args[4])+":"+that.zero(args[5])
+                return args[0]+that.sep+that.zero(args[1]+1)+that.sep+that.zero(args[2])+" "+that.zero(args[3])+":"+that.zero(args[4])+":"+that.zero(args[5])
             }
             if(that.type=='date'){
-                return args[0]+that.sep+that.zero(args[1])+that.sep+that.zero(args[2]);
+                return args[0]+that.sep+that.zero(args[1]+1)+that.sep+that.zero(args[2]);
             }
         }
     }

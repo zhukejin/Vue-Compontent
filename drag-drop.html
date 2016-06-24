@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>拖拽</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style>
+/*    [draggable] {
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+    }*/
+    .dragging {
+      opacity: 0.8;
+      color: #6894D1;
+    }
+    .drag-over {
+      text-decoration: underline;
+    }
+    .drag-enter {
+      color: #C93742;
+    }
+
+    .image {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+  <h3>图片拖拽</h3>
+  <div class="image" v-for="image in images" v-drag-and-drop drop="handleImageDrop">
+    <img src="" data-src="{{ image.src }}" data-index="{{ $index }}" title="{{ image.name }}">
+  </div>
+</div>
+<script type="text/javascript" src='vue.min.js'></script>
+<script src="Js/vue.drag-and-drop.js"></script>
+<script>
+
+  var App = new Vue({
+    el: '#app',
+    data: {
+      images: [
+        {"name":"Image 1","src":"http://placehold.it/100/000000/ffffff"},
+        {"name":"Image 2","src":"http://placehold.it/100/C93742/ffffff"},
+        {"name":"Image 3","src":"http://placehold.it/100/6894D1/ffffff"}
+      ]
+    },
+    ready: function() {
+      Array.prototype.slice.call(document.querySelectorAll('.image'), 0).forEach(function(item){
+        item.children[0].src = item.children[0].getAttribute('data-src');
+      });
+    },
+    methods: {
+      handleImageDrop: function(itemOne, itemTwo) {
+        console.log('handleImageDrop', itemOne.getAttribute('data-index'), itemTwo.getAttribute('data-index'));
+        var dummy = this.images[itemOne.getAttribute('data-index')];
+        this.images.$set(itemOne.getAttribute('data-index'), this.images[itemTwo.getAttribute('data-index')]);
+        this.images.$set(itemTwo.getAttribute('data-index'), dummy);
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="Js/multiselect.js"></script>
+</head>
+<body>
+<div id='app'>
+    <div>
+        <multiselect :selected.sync="selected" :options="options"></multiselect>
+    </div>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+            selected: null,
+            options: ['list', 'of', 'options']
+        }
+    });
+</script>
+</body>
+</html>

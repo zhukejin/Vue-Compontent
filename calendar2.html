@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日期选择器</title>
+    <link href="http://cdn.bootcss.com/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css" rel="stylesheet">
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/datetimepicker.js"></script>
+
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/input.css">
+    <style type="text/css">
+        body {
+            padding: 20px;
+            transition: background 1s cubic-bezier(.075,.82,.165,1);
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body>
+<h2>依赖 Jquery & dateTimepicker 插件</h2>
+
+<fieldset style="margin-top: 10px;">
+    <legend>单个选择</legend>
+    <input type="text" class='text-input' v-datepicker  min-date="2016-06-21" style="width:200px" readonly="" v-model="datetime">
+</fieldset>
+
+<fieldset style="margin-top: 10px;">
+    <legend>时间段</legend>
+    <input type="text" class='text-input' v-datepicker :max-date="datetime2" style="width:200px" readonly="" v-model="datetime1">
+
+    至
+
+    <input type="text" class='text-input' v-datepicker :min-date="datetime1" style="width:200px" readonly="" v-model="datetime2">
+</fieldset>
+
+
+<script src="component/directives.js"></script>
+<script src="Js/datepickerDemo.js"></script>
+</body>
+</html>
