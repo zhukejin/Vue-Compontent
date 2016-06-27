@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态组件测试</title>
+    <!--<link rel="stylesheet" href="style/button.css">-->
+    <link rel="stylesheet" href="style/button.css">
+</head>
+<body>
+<v-button :type="currentView == 'component1' ? 'blue' : 'white'" @click="switchCurrent(1)">组件1</v-button>
+<v-button :type="currentView == 'component2' ? 'blue' : 'white'" @click="switchCurrent(2)">组件2</v-button>
+
+<br>
+<br>
+<br>
+<component :is="currentView" @event-a="doThis"/>
+
+</body>
+<script src="vue.js"></script>
+<script src="component/component.all.js"></script>
+
+<script>
+    new Component('button');
+
+    Vue.component('component1', {
+        template: '<div @click="a">我是组件一，我很牛逼</div>',
+    });
+
+    Vue.component('component2', {
+        template: '<div>我是组件2，我才是最牛逼的。</div>',
+    });
+
+
+    new Vue({
+        el: 'body',
+        data: {
+            currentView: 'component1'
+        },
+        methods: {
+            doThis: function () {
+              console.log(123123)
+            },
+            switchCurrent: function (i) {
+                this.currentView = 'component' + i;
+            }
+        }
+    })
+</script>
+
+</html>
