@@ -12,7 +12,7 @@ class Directives {
      */
     datepicker () {
         Vue.directive('datepicker', {
-            params: ['minDate', 'maxDate', 'startDate'],
+            params: ['minDate', 'maxDate', 'startDate', 'format'],
 
             bind () {
                 var opt = {
@@ -22,6 +22,15 @@ class Directives {
                     format: 'Y-m-d',
                     formatDate: 'Y-m-d',
                 };
+
+                if (this.arg === 'ym') {
+                    opt.format = opt.formatDate = 'Y-m';
+                }
+
+                if (this.params.format) {
+                    opt.format = opt.formatDate = this.params.format;
+                }
+
 
                 for (let i in this.params) {
                     if (this.params[i]) opt[i] = this.params[i];

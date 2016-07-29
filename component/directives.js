@@ -25,7 +25,7 @@ var Directives = function () {
         key: 'datepicker',
         value: function datepicker() {
             Vue.directive('datepicker', {
-                params: ['minDate', 'maxDate', 'startDate'],
+                params: ['minDate', 'maxDate', 'startDate', 'format'],
 
                 bind: function bind() {
                     var opt = {
@@ -35,6 +35,14 @@ var Directives = function () {
                         format: 'Y-m-d',
                         formatDate: 'Y-m-d'
                     };
+
+                    if (this.arg === 'ym') {
+                        opt.format = opt.formatDate = 'Y-m';
+                    }
+
+                    if (this.params.format) {
+                        opt.format = opt.formatDate = this.params.format;
+                    }
 
                     for (var i in this.params) {
                         if (this.params[i]) opt[i] = this.params[i];
