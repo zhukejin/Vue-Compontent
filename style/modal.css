@@ -66,13 +66,13 @@
 .modal-layer-failed {
     background-color: #D44846; }
 
-.commom-layer-content {
+.modal-layer-content {
     text-align: left !important;
     width: 100%;
     min-height: 30px;
-    padding: 14px 0 0 20px;
+    padding: 10px 20px 0 20px;
 }
-.commom-layer-footer {
+.modal-layer-footer {
     width: 100%;
 }
 
@@ -82,7 +82,60 @@
 }
 
 .modal-enter .modal-layer-part ,
-.modal-leave .modal-layer-part  {
+.modal-leave .modal-layer-part {
     -webkit-transform: scale(0);
     transform: scale(0);
+}
+
+
+.modal-enter .modal-container ,
+.modal-leave .modal-container {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+
+
+/*垂直居中*/
+
+.modal-mask {
+    overflow: auto;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: block;
+    transition: opacity .3s cubic-bezier(.075,.82,.165,1);
+}
+
+.modal-wrapper {
+    /*display: table-cell;*/
+    vertical-align: middle;
+    text-align: center;
+}
+
+.modal-container {
+    width: 500px;
+    margin: 0px auto;
+    transition: all .3s cubic-bezier(.075,.82,.165,1);
+
+    display: inline-block;
+    background-color: #FAFAFA;
+    border-radius: 15px 15px 10px 10px;
+    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1), 3px 0 15px rgba(0, 0, 0, 0.1), 0 -3px 15px rgba(0, 0, 0, 0.1), 0 3px 15px rgba(0, 0, 0, 0.1);
+    /*搴曡竟闃村奖*/
+    font-family: "Microsoft YaHei" !important;
+    /*position: relative;*/
+}
+
+.modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+}
+
+.modal-body {
+    margin: 20px 0;
 }

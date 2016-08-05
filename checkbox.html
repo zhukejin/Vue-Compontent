@@ -21,7 +21,7 @@
 <div id="checkboxDemo">
     <fieldset>
         <legend>普通CheckBox</legend>
-        <checkbox :value.sync='check' :disabled='disabled' name='zhukejin'>朱轲瑾-{{check}}</checkbox>
+        <checkbox :value.sync='check' :disabled='disabled' name='zhukejin'>赵云-{{check}}</checkbox>
         <br><br>
         <v-button @click='check = !check' type='white'>{{check ? '取消选中' : '选中'}}</v-button>
         <v-button @click='disabled=!disabled' type='white'>{{disabled ? '取消禁用' : '禁用'}}</v-button>
@@ -166,12 +166,12 @@
         el: '#checkboxGroupDemo',
         data: {
             options: [
-                {label: '朱轲瑾', value: 'zhukejin', disabled: true},
-                {label: '赵素云', value: 'zhaosuyun'},
-                {label: '赵彦超', value: 'zhaoyanchao'},
-                {label: '咸元昭', value: 'xianyuanzhao'},
+                {label: '张飞', value: 'zhangfei', disabled: true},
+                {label: '刘备', value: 'liubei'},
+                {label: '赵云', value: 'zhaoyun'},
+                {label: '关羽', value: 'gruanyu'},
             ],
-            value : ['zhaosuyun', 'zhukejin'],
+            value : ['zhaoyun', 'zhangfei'],
             useButton: {
                 startType: 'white',
                 endType : 'blue'

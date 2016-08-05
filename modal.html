@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/modal.css">
     <link rel="stylesheet" href="style/button.css">
+    <link rel="stylesheet" href="style/doc.css">
     <style type="text/css">
         body {
             padding: 20px;
@@ -19,68 +20,94 @@
 </head>
 <body>
 <div id='modal'>
-    <v-button type='blue' @click="this.show=true">弹出成功按钮</v-button>
-    <modal :show.sync="show" width="500" dismiss=true title="这里是成功" :on-ok="close">
-        这里是内容
+    <v-button type='blue' @click="this.show=true">弹出默认层</v-button>
+    <modal :show.sync="show" width="500" title="这里是默认" :on-ok="ok1">
+        这里是内容, 默认的弹出框距离顶部100 px
     </modal>
     
     <v-button type='red' @click="this.show1=true">弹出失败按钮</v-button>
-    <modal :show.sync="show1" width="500" type="failed" :dismiss=true title="这里是失败" :on-ok="close1">
-        这里是内容
+    <modal :show.sync="show1" width="500" top="20" type="failed" :btn-disabled="true" btn-text='禁用按钮' :dismiss=true title="这里是失败" :on-ok="close">
+        弹出失败按钮,这个弹出框距离顶部20px, 按钮禁用，并且可以点击遮罩层隐藏
     </modal>
-    
+
+
+    <v-button @click="this.show2=true">垂直居中的弹出框</v-button>
+    <modal :show.sync="show2" position="center" width="500"  :on-ok="close1" :dismiss=true title="垂直居中" >
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+        <div>垂直居中的弹出框</div>
+    </modal>
+
+    <v-button type='ghost' @click="this.show3=true">关闭Footer</v-button>
+    <modal :show.sync="show3" width="500" :no-footer='true' type="failed"  :on-ok="close1" :dismiss=true title="垂直居中" >
+        <div style="padding-left: 20px;">
+            <ul>
+                <li>没有footer</li>
+                <li>没有footer</li>
+                <li>没有footer</li>
+            </ul>
+        </div>
+    </modal>
+
+
 </div>
 
+<fieldset style="margin-top: 10px;padding: 10px 20px 10px 40px; color:green;line-height:1.5">
+    <legend>Document</legend>
+
+    <ul>
+        <li>
+            <b>show :</b> 必须，布尔值，且为 .sync 的双向值
+        </li>
+        <li>
+            <b>position :</b> 可选，字符串，当设置为 center 时，垂直居中，默认为距顶部100px
+        </li>
+    </ul>
+</fieldset>
+
 <script type="text/javascript" src="Js/button.js"></script>
-
+<script src="component/component.all.es6"></script>
 <script type="text/javascript">
-    //模态框组件
-    Vue.component('modal', {
-        template: '<div class="modal-layer v-modal" :style="{top: top + \'px\'}" id="marketing-layer" transition="modal" v-show="show" @click.self="hideBind">'+
-        '<div class="modal-layer-part" :style="{width: width + \'px\'}">'+
-        '<div class="modal-layer-part-title modal-layer-success other-layer-title" :class="{\'modal-layer-success\': type ==\'success\', \'modal-layer-failed\' :type ==\'failed\'}">'+
-        '<span class="modal-layer-part-title-left">{{title}}</span>'+
-        '<span class="modal-layer-part-title-right" @click="show=false">'+
-        '×'+
-        '</span>'+
-        '</div>'+
-        '<div class="modal-layer-content"><slot></slot></div>' +
-        '<div class="clearfix modal-layer-footer">'+
-        '<div class="footer-btn"><v-button :type="type == \'failed\' ? \'red\' : \'blue\'" width=76 height=26 @click="onOk()">{{btnText || "确定"}}</v-button></div>' +
-        '</div>' +
-        '</div>'+
-        ' </div>',
-        props: {
-            show:Boolean,
-            title:String,
-            type:String,
-            onOk: Function,
-            width: [Number, String],
-            top: [Number, String],
-            btnText: String,
-            dismiss: Boolean
-
-        },
-        methods: {
-            hideBind : function () {
-                if (!this.dismiss) return;
-                this.show = false
-            }
-        }
-    });
+    new Component('modal');
 
     var modal = new Vue({
         el: '#modal',
         data: {
             show: false,
             show1: false,
+            show2: false,
+            show3: false,
         },
         methods: {
-            close: function (val) {
-                this.show = false
+            ok1: function  () {
+                this.show = !1;
+                this.$nextTick(()=>alert('点击了关闭'))
             },
-             close1: function (val) {
-                this.show1 = false
+            close: function (val) {
+                this.show = this.show1 = this.show2 = this.show3 = false
             }
         }
     });

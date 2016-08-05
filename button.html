@@ -22,7 +22,7 @@
     <legend>Button</legend>
     <v-button @click="click('普通')">普通按钮</v-button>
     <v-button width=200>自定义宽度</v-button>
-    <v-button disabled>禁用按钮</v-button>
+    <v-button :disabled="hehe" @click="click('asd')">禁用按钮</v-button>
     <v-button type='white'>白色按钮</v-button>
     <v-button type='ghost'>幽灵按钮</v-button>
     <v-button type='blue'>蓝色按钮</v-button>
@@ -32,29 +32,26 @@
 
 <fieldset id="spanBtn" style="margin-top: 10px;">
     <legend>模拟的Button</legend>
-    <v-button type='white' :material="material">白色按钮</v-button>
+    <v-button type='white' @click='asd' :disabled="hehe" :material="material">白色按钮</v-button>
 </fieldset>
 
-<script type="text/javascript" src="Js/button.js"></script>
+<!--<script type="text/javascript" src="Js/button.js"></script>-->
+<script type="text/javascript" src="component/component.all.es6"></script>
 <script type="text/javascript">
-    var check = new Vue({
-        el: '#buttonDemo',
-        methods: {
-            click: function (type) {
-                console.log(type);
-            }
-        }
-    });
+    new Component('button')
 
-    var check1 = new Vue({
-        el: '#spanBtn',
+    var check = new Vue({
+        el: 'body',
         data: {
-            material: 'span'
+            hehe: false
         },
         methods: {
             click: function (type) {
+                this.hehe = !this.hehe;
                 console.log(type);
-                check.$off("click")
+            },
+            asd: function () {
+                console.log('模拟')
             }
         }
     });

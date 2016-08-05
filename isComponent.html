@@ -5,6 +5,14 @@
     <title>动态组件测试</title>
     <!--<link rel="stylesheet" href="style/button.css">-->
     <link rel="stylesheet" href="style/button.css">
+    <style>
+        .fade-transition {
+            transition: opacity .2s ease;
+        }
+        .fade-enter, .fade-leave {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
 <v-button :type="currentView == 'component1' ? 'blue' : 'white'" @click="switchCurrent(1)">组件1</v-button>
@@ -13,7 +21,7 @@
 <br>
 <br>
 <br>
-<component :is="currentView" @event-a="doThis"/>
+<component :is="currentView" keep-alive transition="fade" transition-mode="out-in" />
 
 </body>
 <script src="vue.js"></script>
@@ -23,23 +31,40 @@
     new Component('button');
 
     Vue.component('component1', {
-        template: '<div @click="a">我是组件一，我很牛逼</div>',
+        template: '<div>组件1： <input type="text" v-model="input"/></div>',
+        methods: {
+            eventA: function () {
+                this.$dispatch('click')
+            }
+        },
+        data: function () {
+            return {
+                input: '组件1'
+            }
+        }
     });
 
     Vue.component('component2', {
-        template: '<div>我是组件2，我才是最牛逼的。</div>',
+        template: '<div> 组件2 ： <input type="text" v-model="input"/></div>',
+        data: function () {
+            return {
+                input : '组件2'
+            }
+        }
     });
 
 
-    new Vue({
+    var app = new Vue({
         el: 'body',
         data: {
             currentView: 'component1'
         },
+        events: {
+            click: function () {
+                console.log(123123)
+            }
+        },
         methods: {
-            doThis: function () {
-              console.log(123123)
-            },
             switchCurrent: function (i) {
                 this.currentView = 'component' + i;
             }

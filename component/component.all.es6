@@ -79,7 +79,7 @@ class Component {
 
     button () {
         Vue.component('vButton', {
-            template: "<span v-el:father style='display: inline-block;' :style='style'><template v-if='material==\"span\"'>" +
+            template: "<span style='display: inline-block;' :style='style'><template v-if='material==\"span\"'>" +
             "<span class='zq-btn' style='display: inline-block;' :style=\"styleBtn\" :class=\"btnClass\"><slot></slot></span>" +
             "</template>" +
             "<template v-else>"+
@@ -98,13 +98,10 @@ class Component {
                 left: ['Number', 'String'],
                 right: ['Number', 'String'],
             },
-            data () {
-                if (this.disabled === undefined) this.disabled = true;
-                return {
-                    disabled1 : this.disabled,
-                }
-            },
             computed: {
+                disabled1 () {
+                    return this.disabled;
+                },
                 btnClass () {
                     var cls = ['zq-' + this.type + '-btn']
                     if (this.disabled) {
@@ -128,6 +125,7 @@ class Component {
 
                 this.styleBtn = Object.assign(style, this.styleBtn);
 
+                if (this.disabled === undefined) this.disabled = true;
             }
         });
     }
@@ -136,8 +134,10 @@ class Component {
     modal () {
         //模态框组件
         Vue.component('modal', {
-            template: '<div v-el:modal class="modal-layer v-modal" :style="{top: top + \'px\'}" id="marketing-layer" transition="modal" v-show="show" @click.self="hideBind">'+
-            '<div class="modal-layer-part" :style="{width: width + \'px\'}">'+
+            template: '<template v-if="position == \'center\'">' +
+            '<div v-el:modal class="modal-mask v-modal" v-show="show" transition="modal">' +
+            '<div class="modal-wrapper" @click.self="hideBind">' +
+            '<div class="modal-container" :style="{width: width + \'px\'}">' +
             '<div class="modal-layer-part-title modal-layer-success other-layer-title" :class="{\'modal-layer-success\': type ==\'success\', \'modal-layer-failed\' :type ==\'failed\'}">'+
             '<span class="modal-layer-part-title-left">{{title}}</span>'+
             '<span class="modal-layer-part-title-right" @click="close">'+
@@ -145,16 +145,38 @@ class Component {
             '</span>'+
             '</div>'+
             '<div class="modal-layer-content"><slot></slot></div>' +
-            '<template v-if="nofooter">' +
+            '<template v-if="noFooter">' +
             '<div style="height: 30px"></div>'+
             '</template>'+
-            '<div class="clearfix modal-layer-footer" v-if="!nofooter">'+
+            '<div class="clearfix modal-layer-footer" v-if="!noFooter">'+
+            '<div class="footer-btn"><v-button :disabled="btnDisabled" :type="type == \'failed\' ? \'red\' : \'blue\'" width=76 height=26 @click="onOk()">{{btnText || "确定"}}</v-button></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</template>' +
+
+            '<template v-else>' +
+            '<div v-el:modal class="modal-layer v-modal" id="marketing-layer" transition="modal" v-show="show" @click.self="hideBind">'+
+            '<div class="modal-layer-part" :style="{width: width + \'px\',top: top + \'px\'}">'+
+            '<div class="modal-layer-part-title modal-layer-success other-layer-title" :class="{\'modal-layer-success\': type ==\'success\', \'modal-layer-failed\' :type ==\'failed\'}">'+
+            '<span class="modal-layer-part-title-left">{{title}}</span>'+
+            '<span class="modal-layer-part-title-right" @click="close">'+
+            '×'+
+            '</span>'+
+            '</div>'+
+            '<div class="modal-layer-content"><slot></slot></div>' +
+            '<template v-if="noFooter">' +
+            '<div style="height: 30px"></div>'+
+            '</template>'+
+            '<div class="clearfix modal-layer-footer" v-if="!noFooter">'+
             '<div class="footer-btn"><v-button :disabled="btnDisabled" :type="type == \'failed\' ? \'red\' : \'blue\'" width=76 height=26 @click="onOk()">{{btnText || "确定"}}</v-button></div>' +
             '</div>' +
             '</div>'+
-            ' </div>',
+            ' </div></template>',
             props: {
                 show:Boolean,
+                position: String,
                 title:String,
                 type:String,
                 onOk: Function,
@@ -162,7 +184,7 @@ class Component {
                 top: [Number, String],
                 btnText: String,
                 dismiss: Boolean,
-                nofooter: Boolean,
+                noFooter: Boolean,
                 btnDisabled: Boolean
             },
             watch: {
@@ -175,11 +197,13 @@ class Component {
 
                         document.body.style.overflowY = 'hidden';
                         document.body.style.paddingRight = `${this.getScrollWidth()}px`;
-
-
                         this.$els.modal.style.paddingRight = '17px';
                     } else {
-                        this.clearPadding();
+
+                        setTimeout(()=>{
+                            this.clearPadding();
+                        },300)
+
                     }
                 }
             },
